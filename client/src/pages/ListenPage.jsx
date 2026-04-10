@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const sage = "#01796F";
 const cream = "#FAF8F3";
@@ -33,6 +33,8 @@ const ALL_EPISODES = {
 
 export default function ListenPage() {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const bundleId = searchParams.get("bundleId");
   const navigate = useNavigate();
   const audioRef = useRef(null);
 
@@ -63,7 +65,7 @@ export default function ListenPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ episodeSlug: slug }),
+        body: JSON.stringify({ episodeSlug: slug, bundleId }),
       });
     } catch {
       /* silent */
