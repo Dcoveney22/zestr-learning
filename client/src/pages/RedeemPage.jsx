@@ -52,11 +52,13 @@ export default function RedeemPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(
-          data.error?.includes("already exists")
-            ? "An account with this email already exists. Please log in."
-            : data.error || "Something went wrong.",
-        );
+        if (data.existingAccount) {
+          setError(
+            "You already have a Zest:r Learning account. Log in and use the 'Add a bundle' option on your dashboard to add this code.",
+          );
+        } else {
+          setError(data.error || "Something went wrong.");
+        }
         return;
       }
       localStorage.setItem("learning_token", data.token);
@@ -85,7 +87,7 @@ export default function RedeemPage() {
       {/* Logo */}
       <div style={{ textAlign: "center", marginBottom: "32px" }}>
         <img
-          src="https://zestr.co.uk/zestr-logo-new.png"
+          src="https://www.zestr.app/zestr-logo-new.png"
           alt="Zest:r"
           style={{ height: "30px", display: "block", margin: "0 auto 8px" }}
         />

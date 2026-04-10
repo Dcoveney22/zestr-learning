@@ -81,7 +81,7 @@ export default function LoginPage() {
       {/* Logo */}
       <div style={{ textAlign: "center", marginBottom: "32px" }}>
         <img
-          src="https://zestr.co.uk/zestr-logo-new.png"
+          src="https://www.zestr.app/zestr-logo-new.png"
           alt="Zest:r"
           style={{ height: "30px", display: "block", margin: "0 auto 8px" }}
         />
