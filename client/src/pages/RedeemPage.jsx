@@ -339,7 +339,7 @@ export default function RedeemPage() {
       </div>
 
       <p className="text-xs text-center mt-6" style={{ color: "#AEAAA0" }}>
-        Zest:r · hello@zestr.app
+        Zest:r · david@zestr.co.uk
       </p>
     </div>
   );

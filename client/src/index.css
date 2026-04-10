@@ -34,6 +34,28 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  background-color: #faf8f3;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-weight: 300;
+  color: #1c1c1a;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
