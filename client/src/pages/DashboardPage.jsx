@@ -7,7 +7,6 @@ const charcoal = "#1C1C1A";
 const muted = "#6B6B60";
 const border = "#E8E4DC";
 const darkTeal = "#014A43";
-const terracotta = "#CD5C5C";
 const serif = "'Cormorant Garamond', Georgia, serif";
 const sans = "'DM Sans', system-ui, sans-serif";
 
@@ -16,7 +15,8 @@ const BUNDLE_CONTENT = {
     title: "Stay Sharp on Shift",
     subtitle: "Podcast learning for hospitality professionals",
     description:
-      "Short, practical audio lessons you can listen to on your commute or break. Covering mental resilience, handling difficult conversations, building confidence under pressure, and simple wellbeing habits that actually stick.",
+      "Short, practical audio lessons built for people on shift. Covering mental resilience, handling difficult conversations, building confidence under pressure, and simple wellbeing habits that actually stick. No screens needed — just real, useful tools for real working life.",
+    color: "#2D6A4F",
     episodes: [
       {
         slug: "ssos-01",
@@ -31,7 +31,8 @@ const BUNDLE_CONTENT = {
     title: "Stay Sharp on Shift",
     subtitle: "Podcast learning for hospitality professionals",
     description:
-      "Short, practical audio lessons you can listen to on your commute or break. Covering mental resilience, handling difficult conversations, building confidence under pressure, and simple wellbeing habits that actually stick.",
+      "Short, practical audio lessons built for people on shift. Covering mental resilience, handling difficult conversations, building confidence under pressure, and simple wellbeing habits that actually stick. No screens needed — just real, useful tools for real working life.",
+    color: "#2D6A4F",
     episodes: [
       {
         slug: "ssos-01",
@@ -46,7 +47,8 @@ const BUNDLE_CONTENT = {
     title: "Leadership Sprint",
     subtitle: "CPD-accredited audio lessons, built around shift work",
     description:
-      "Leadership is not just for managers. This bundle gives you the tools to lead from wherever you are — handling pressure, communicating with confidence, motivating a team, and thinking strategically even on a busy shift.",
+      "Leadership is not just for managers. This bundle gives you the tools to lead from wherever you are — handling pressure, communicating with confidence, motivating a team, and thinking strategically even on a busy shift. CPD-accredited and built for hospitality.",
+    color: "#1B4965",
     episodes: [
       {
         slug: "ls-01",
@@ -61,7 +63,8 @@ const BUNDLE_CONTENT = {
     title: "Leadership Sprint",
     subtitle: "CPD-accredited audio lessons, built around shift work",
     description:
-      "Leadership is not just for managers. This bundle gives you the tools to lead from wherever you are — handling pressure, communicating with confidence, motivating a team, and thinking strategically even on a busy shift.",
+      "Leadership is not just for managers. This bundle gives you the tools to lead from wherever you are — handling pressure, communicating with confidence, motivating a team, and thinking strategically even on a busy shift. CPD-accredited and built for hospitality.",
+    color: "#1B4965",
     episodes: [
       {
         slug: "ls-01",
@@ -76,36 +79,37 @@ const BUNDLE_CONTENT = {
 
 function ProgressRing({ progress, total }) {
   const pct = total === 0 ? 0 : Math.round((progress / total) * 100);
-  const r = 26;
+  const r = 32;
   const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
   return (
     <div
       style={{
         position: "relative",
-        width: "68px",
-        height: "68px",
+        width: "80px",
+        height: "80px",
         flexShrink: 0,
       }}
     >
-      <svg width="68" height="68" style={{ transform: "rotate(-90deg)" }}>
+      <svg width="80" height="80" style={{ transform: "rotate(-90deg)" }}>
         <circle
-          cx="34"
-          cy="34"
+          cx="40"
+          cy="40"
           r={r}
           fill="none"
-          stroke={border}
-          strokeWidth="4"
+          stroke="rgba(255,255,255,0.15)"
+          strokeWidth="5"
         />
         <circle
-          cx="34"
-          cy="34"
+          cx="40"
+          cy="40"
           r={r}
           fill="none"
-          stroke={sage}
-          strokeWidth="4"
+          stroke="white"
+          strokeWidth="5"
           strokeDasharray={`${dash} ${circ}`}
           strokeLinecap="round"
+          style={{ transition: "stroke-dasharray 0.6s ease" }}
         />
       </svg>
       <div
@@ -113,15 +117,33 @@ function ProgressRing({ progress, total }) {
           position: "absolute",
           inset: 0,
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: "13px",
-          fontWeight: 600,
-          color: sage,
-          fontFamily: sans,
         }}
       >
-        {pct}%
+        <span
+          style={{
+            fontSize: "18px",
+            fontWeight: 700,
+            color: "white",
+            lineHeight: 1,
+            fontFamily: sans,
+          }}
+        >
+          {pct}%
+        </span>
+        <span
+          style={{
+            fontSize: "9px",
+            color: "rgba(255,255,255,0.6)",
+            fontWeight: 500,
+            letterSpacing: "0.05em",
+            marginTop: "2px",
+          }}
+        >
+          done
+        </span>
       </div>
     </div>
   );
@@ -211,7 +233,6 @@ export default function DashboardPage() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "24px",
         }}
       >
         <div style={{ textAlign: "center" }}>
@@ -233,7 +254,6 @@ export default function DashboardPage() {
               background: "none",
               border: "none",
               cursor: "pointer",
-              fontFamily: sans,
             }}
           >
             Try again
@@ -259,11 +279,14 @@ export default function DashboardPage() {
       month: "long",
       year: "numeric",
     });
+  const heroBg = content?.color || darkTeal;
 
   return (
     <div
       style={{ minHeight: "100vh", backgroundColor: cream, fontFamily: sans }}
     >
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+
       {/* Nav */}
       <nav
         style={{
@@ -272,7 +295,7 @@ export default function DashboardPage() {
           zIndex: 10,
           backgroundColor: "white",
           borderBottom: `1px solid ${border}`,
-          padding: "0 20px",
+          padding: "0 24px",
           height: "56px",
           display: "flex",
           alignItems: "center",
@@ -283,7 +306,7 @@ export default function DashboardPage() {
           <img
             src="https://zestr.co.uk/zestr-logo-new.png"
             alt="Zest:r"
-            style={{ height: "22px" }}
+            style={{ height: "24px" }}
           />
           <span
             style={{
@@ -293,8 +316,9 @@ export default function DashboardPage() {
               textTransform: "uppercase",
               color: sage,
               backgroundColor: "#F0F9F7",
-              padding: "3px 8px",
+              padding: "3px 10px",
               borderRadius: "100px",
+              border: "1px solid #C5E8E3",
             }}
           >
             Learning
@@ -303,11 +327,13 @@ export default function DashboardPage() {
         <button
           onClick={handleLogout}
           style={{
-            fontSize: "13px",
+            fontSize: "12px",
             color: muted,
-            fontWeight: 300,
+            fontWeight: 400,
             background: "none",
-            border: "none",
+            border: `1px solid ${border}`,
+            borderRadius: "100px",
+            padding: "6px 14px",
             cursor: "pointer",
             fontFamily: sans,
           }}
@@ -316,169 +342,192 @@ export default function DashboardPage() {
         </button>
       </nav>
 
-      {/* Hero band */}
-      <div style={{ backgroundColor: darkTeal, padding: "40px 20px 36px" }}>
-        <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <p
-            style={{
-              fontSize: "10px",
-              fontWeight: 600,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.55)",
-              marginBottom: "10px",
-            }}
-          >
-            Assemble You · Podcast Learning
-          </p>
-          <h1
-            style={{
-              fontFamily: serif,
-              fontSize: "clamp(2rem, 5vw, 2.75rem)",
-              fontWeight: 300,
-              color: "white",
-              lineHeight: 1.2,
-              marginBottom: "8px",
-            }}
-          >
-            {content?.title || bundle?.experience?.name}
-          </h1>
-          <p
-            style={{
-              fontSize: "14px",
-              color: "rgba(255,255,255,0.6)",
-              fontWeight: 300,
-            }}
-          >
-            {content?.subtitle}
-          </p>
-        </div>
-      </div>
-
+      {/* Hero */}
       <div
         style={{
-          maxWidth: "600px",
-          margin: "0 auto",
-          padding: "28px 20px 60px",
+          background: `linear-gradient(135deg, ${heroBg} 0%, ${darkTeal} 100%)`,
+          padding: "48px 24px 40px",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        {/* Expired warning */}
-        {isExpired && (
+        <div
+          style={{
+            position: "absolute",
+            top: "-40px",
+            right: "-40px",
+            width: "200px",
+            height: "200px",
+            borderRadius: "50%",
+            backgroundColor: "rgba(255,255,255,0.04)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "-60px",
+            left: "-20px",
+            width: "160px",
+            height: "160px",
+            borderRadius: "50%",
+            backgroundColor: "rgba(255,255,255,0.03)",
+          }}
+        />
+
+        <div
+          style={{ maxWidth: "600px", margin: "0 auto", position: "relative" }}
+        >
           <div
             style={{
-              backgroundColor: "#FFF1F1",
-              border: "1px solid #FEC5C5",
-              borderRadius: "16px",
-              padding: "16px 20px",
+              display: "inline-flex",
+              alignItems: "center",
+              backgroundColor: "rgba(255,255,255,0.12)",
+              borderRadius: "100px",
+              padding: "5px 12px",
               marginBottom: "20px",
             }}
           >
-            <p
-              style={{
-                fontSize: "13px",
-                color: "#a83333",
-                fontWeight: 300,
-                lineHeight: 1.6,
-              }}
-            >
-              Your access expired on {formatDate(expiresAt)}. Questions?{" "}
-              <a
-                href="mailto:david@zestr.co.uk"
-                style={{ color: "#a83333", fontWeight: 600 }}
-              >
-                david@zestr.co.uk
-              </a>
-            </p>
-          </div>
-        )}
-
-        {/* Access banner */}
-        {!isExpired && expiresAt && (
-          <div
-            style={{
-              backgroundColor: "#F0F9F7",
-              border: "1px solid #C5E8E3",
-              borderRadius: "16px",
-              padding: "14px 20px",
-              marginBottom: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <p style={{ fontSize: "13px", color: "#1a5e55", fontWeight: 300 }}>
-              Access expires{" "}
-              <strong style={{ fontWeight: 600 }}>
-                {formatDate(expiresAt)}
-              </strong>
-            </p>
             <span
-              style={{
-                fontSize: "11px",
-                fontWeight: 700,
-                color: "white",
-                backgroundColor: sage,
-                padding: "4px 10px",
-                borderRadius: "100px",
-              }}
-            >
-              {daysRemaining}d left
-            </span>
-          </div>
-        )}
-
-        {/* Progress card */}
-        <div
-          style={{
-            backgroundColor: "white",
-            border: `1px solid ${border}`,
-            borderRadius: "20px",
-            padding: "24px 28px",
-            marginBottom: "24px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "20px",
-          }}
-        >
-          <div>
-            <p
               style={{
                 fontSize: "10px",
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: muted,
-                marginBottom: "6px",
+                color: "rgba(255,255,255,0.7)",
               }}
             >
-              Your progress
-            </p>
-            <p
-              style={{
-                fontFamily: serif,
-                fontSize: "28px",
-                fontWeight: 300,
-                color: charcoal,
-                lineHeight: 1,
-              }}
-            >
-              {listenedCount} of {episodes.length}
-            </p>
-            <p
-              style={{
-                fontSize: "12px",
-                color: muted,
-                fontWeight: 300,
-                marginTop: "4px",
-              }}
-            >
-              episodes listened
-            </p>
+              Assemble You · Podcast Learning
+            </span>
           </div>
-          <ProgressRing progress={listenedCount} total={episodes.length} />
-        </div>
 
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: "20px",
+              marginBottom: "28px",
+            }}
+          >
+            <div style={{ flex: 1 }}>
+              <h1
+                style={{
+                  fontFamily: serif,
+                  fontWeight: 300,
+                  color: "white",
+                  fontSize: "clamp(2rem, 6vw, 3rem)",
+                  lineHeight: 1.15,
+                  margin: "0 0 8px",
+                }}
+              >
+                {content?.title || bundle?.experience?.name}
+              </h1>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "rgba(255,255,255,0.6)",
+                  fontWeight: 300,
+                  margin: 0,
+                }}
+              >
+                {content?.subtitle}
+              </p>
+            </div>
+            <ProgressRing progress={listenedCount} total={episodes.length} />
+          </div>
+
+          {/* Stats */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "rgba(255,255,255,0.1)",
+                borderRadius: "12px",
+                padding: "10px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <span
+                style={{ fontSize: "18px", fontWeight: 700, color: "white" }}
+              >
+                {listenedCount}/{episodes.length}
+              </span>
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "rgba(255,255,255,0.6)",
+                  fontWeight: 300,
+                }}
+              >
+                episodes
+              </span>
+            </div>
+            {!isExpired && expiresAt && (
+              <div
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  borderRadius: "12px",
+                  padding: "10px 16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <span
+                  style={{ fontSize: "18px", fontWeight: 700, color: "white" }}
+                >
+                  {daysRemaining}
+                </span>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "rgba(255,255,255,0.6)",
+                    fontWeight: 300,
+                  }}
+                >
+                  days left · expires {formatDate(expiresAt)}
+                </span>
+              </div>
+            )}
+            {isExpired && (
+              <div
+                style={{
+                  backgroundColor: "rgba(205,92,92,0.3)",
+                  borderRadius: "12px",
+                  padding: "10px 16px",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "rgba(255,255,255,0.8)",
+                    fontWeight: 500,
+                  }}
+                >
+                  Access expired {formatDate(expiresAt)}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div
+        style={{
+          maxWidth: "600px",
+          margin: "0 auto",
+          padding: "32px 24px 64px",
+        }}
+      >
         {/* About */}
         <div
           style={{
@@ -496,7 +545,7 @@ export default function DashboardPage() {
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               color: muted,
-              marginBottom: "12px",
+              margin: "0 0 12px",
             }}
           >
             About this bundle
@@ -506,7 +555,9 @@ export default function DashboardPage() {
               fontSize: "14px",
               color: muted,
               fontWeight: 300,
-              lineHeight: 1.7,
+              lineHeight: 1.75,
+              margin: 0,
+              textAlign: "left",
             }}
           >
             {content?.description}
@@ -514,19 +565,43 @@ export default function DashboardPage() {
         </div>
 
         {/* Episodes */}
-        <div>
-          <p
+        <div style={{ marginBottom: "24px" }}>
+          <div
             style={{
-              fontSize: "10px",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: muted,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               marginBottom: "16px",
             }}
           >
-            Episodes
-          </p>
+            <p
+              style={{
+                fontSize: "10px",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: muted,
+                margin: 0,
+              }}
+            >
+              Episodes · {episodes.length} total
+            </p>
+            {listenedCount === episodes.length && episodes.length > 0 && (
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  color: sage,
+                  backgroundColor: "#F0F9F7",
+                  border: "1px solid #C5E8E3",
+                  padding: "3px 10px",
+                  borderRadius: "100px",
+                }}
+              >
+                ✓ Bundle complete
+              </span>
+            )}
+          </div>
 
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
@@ -543,39 +618,47 @@ export default function DashboardPage() {
                   }
                   style={{
                     backgroundColor: "white",
-                    border: `1px solid ${listened ? "#C5E8E3" : border}`,
+                    border: `1px solid ${listened ? "#A7D9D3" : border}`,
                     borderRadius: "16px",
-                    padding: "16px 20px",
+                    padding: "18px 20px",
                     display: "flex",
                     alignItems: "center",
                     gap: "16px",
                     cursor: available && !isExpired ? "pointer" : "default",
-                    opacity: isExpired ? 0.6 : 1,
-                    transition: "box-shadow 0.15s ease",
+                    opacity: isExpired ? 0.5 : 1,
+                    transition: "all 0.15s ease",
                   }}
                   onMouseEnter={(e) => {
-                    if (available && !isExpired)
+                    if (available && !isExpired) {
                       e.currentTarget.style.boxShadow =
-                        "0 4px 16px rgba(0,0,0,0.06)";
+                        "0 4px 20px rgba(0,0,0,0.08)";
+                      e.currentTarget.style.transform = "translateY(-1px)";
+                    }
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
                   {/* Number / check */}
                   <div
                     style={{
-                      width: "36px",
-                      height: "36px",
+                      width: "44px",
+                      height: "44px",
                       borderRadius: "50%",
-                      backgroundColor: listened ? sage : "#F5F5F5",
+                      background: listened
+                        ? `linear-gradient(135deg, ${sage}, #019A8E)`
+                        : "#F5F5F2",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
-                      fontSize: "13px",
-                      fontWeight: 600,
+                      fontSize: "15px",
+                      fontWeight: 700,
                       color: listened ? "white" : muted,
+                      boxShadow: listened
+                        ? "0 2px 8px rgba(1,121,111,0.25)"
+                        : "none",
                     }}
                   >
                     {listened ? "✓" : i + 1}
@@ -585,10 +668,10 @@ export default function DashboardPage() {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p
                       style={{
-                        fontSize: "14px",
+                        fontSize: "15px",
                         fontWeight: 500,
                         color: charcoal,
-                        marginBottom: "2px",
+                        margin: "0 0 3px",
                       }}
                     >
                       {ep.title}
@@ -598,93 +681,133 @@ export default function DashboardPage() {
                         fontSize: "12px",
                         color: muted,
                         fontWeight: 300,
+                        margin: 0,
                       }}
                     >
-                      {ep.description}
+                      {ep.description} · {ep.duration}
                     </p>
                   </div>
 
-                  {/* Duration + play */}
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <span style={{ fontSize: "12px", color: muted }}>
-                      {ep.duration}
+                  {/* Action */}
+                  {available && !isExpired ? (
+                    <div
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "50%",
+                        background: listened
+                          ? "#F0F9F7"
+                          : `linear-gradient(135deg, ${sage}, #019A8E)`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                        boxShadow: listened
+                          ? "none"
+                          : "0 2px 8px rgba(1,121,111,0.3)",
+                      }}
+                    >
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill={listened ? sage : "white"}
+                        style={{ marginLeft: listened ? 0 : "2px" }}
+                      >
+                        <polygon points="5,3 19,12 5,21" />
+                      </svg>
+                    </div>
+                  ) : (
+                    <span
+                      style={{
+                        fontSize: "11px",
+                        color: muted,
+                        fontWeight: 500,
+                        backgroundColor: "#F5F5F2",
+                        padding: "5px 12px",
+                        borderRadius: "100px",
+                        flexShrink: 0,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      Coming soon
                     </span>
-                    {available && !isExpired ? (
-                      <div
-                        style={{
-                          width: "32px",
-                          height: "32px",
-                          borderRadius: "50%",
-                          backgroundColor: listened ? "#F0F9F7" : sage,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <svg
-                          width="11"
-                          height="11"
-                          viewBox="0 0 24 24"
-                          fill={listened ? sage : "white"}
-                        >
-                          <polygon points="5,3 19,12 5,21" />
-                        </svg>
-                      </div>
-                    ) : (
-                      <span
-                        style={{
-                          fontSize: "11px",
-                          color: muted,
-                          fontWeight: 500,
-                          backgroundColor: "#F5F5F5",
-                          padding: "4px 10px",
-                          borderRadius: "100px",
-                        }}
-                      >
-                        Soon
-                      </span>
-                    )}
-                  </div>
+                  )}
                 </div>
               );
             })}
           </div>
         </div>
 
+        {/* Assemble You credit */}
+        <div
+          style={{
+            backgroundColor: "white",
+            border: `1px solid ${border}`,
+            borderRadius: "20px",
+            padding: "20px 24px",
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+          }}
+        >
+          <div
+            style={{
+              width: "44px",
+              height: "44px",
+              borderRadius: "12px",
+              backgroundColor: "#F0F9F7",
+              border: "1px solid #C5E8E3",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              fontSize: "20px",
+            }}
+          >
+            🎧
+          </div>
+          <div>
+            <p
+              style={{
+                fontSize: "13px",
+                fontWeight: 600,
+                color: charcoal,
+                margin: "0 0 2px",
+              }}
+            >
+              Powered by Assemble You
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                color: muted,
+                fontWeight: 300,
+                margin: 0,
+              }}
+            >
+              Award-winning podcast-style learning for hospitality professionals
+            </p>
+          </div>
+        </div>
+
         {/* Footer */}
         <div
           style={{
-            marginTop: "48px",
+            marginTop: "40px",
             paddingTop: "24px",
             borderTop: `1px solid ${border}`,
             textAlign: "center",
           }}
         >
-          <p style={{ fontSize: "12px", color: "#AEAAA0" }}>
-            Questions?{" "}
+          <p style={{ fontSize: "12px", color: "#AEAAA0", margin: 0 }}>
+            Questions about your bundle?{" "}
             <a
               href="mailto:david@zestr.co.uk"
-              style={{ color: sage, textDecoration: "none" }}
+              style={{ color: sage, textDecoration: "none", fontWeight: 500 }}
             >
               david@zestr.co.uk
             </a>
-          </p>
-          <p
-            style={{
-              fontSize: "11px",
-              color: "#AEAAA0",
-              marginTop: "4px",
-              fontWeight: 300,
-            }}
-          >
-            Zest:r Learning · Powered by Assemble You
           </p>
         </div>
       </div>
