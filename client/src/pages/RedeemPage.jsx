@@ -80,8 +80,15 @@ export default function RedeemPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
-      style={{ backgroundColor: s.cream }}
+      style={{
+        minHeight: "100vh",
+        backgroundColor: s.cream,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "48px 16px",
+      }}
     >
       {/* Logo */}
       <div className="mb-10 text-center">
@@ -99,8 +106,15 @@ export default function RedeemPage() {
       </div>
 
       <div
-        className="w-full max-w-md rounded-3xl overflow-hidden shadow-lg"
-        style={{ border: `1px solid ${s.border}`, backgroundColor: "white" }}
+        style={{
+          width: "100%",
+          maxWidth: "448px",
+          borderRadius: "24px",
+          overflow: "hidden",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
+          border: `1px solid ${s.border}`,
+          backgroundColor: "white",
+        }}
       >
         {/* Header */}
         <div
