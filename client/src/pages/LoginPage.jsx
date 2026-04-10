@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const s = {
-  sage: "#01796F",
-  cream: "#FAF8F3",
-  charcoal: "#1C1C1A",
-  muted: "#6B6B60",
-  border: "#E8E4DC",
-  serif: { fontFamily: "'Cormorant Garamond', Georgia, serif" },
-  sans: { fontFamily: "'DM Sans', system-ui, sans-serif" },
-};
+const sage = "#01796F";
+const cream = "#FAF8F3";
+const charcoal = "#1C1C1A";
+const muted = "#6B6B60";
+const border = "#E8E4DC";
+const darkTeal = "#014A43";
+const serif = "'Cormorant Garamond', Georgia, serif";
+const sans = "'DM Sans', system-ui, sans-serif";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -22,7 +21,6 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
@@ -30,12 +28,10 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
-
       if (!res.ok) {
         setError(data.error || "Invalid email or password.");
         return;
       }
-
       localStorage.setItem("learning_token", data.token);
       localStorage.setItem("learning_user", JSON.stringify(data.user));
       navigate("/dashboard");
@@ -46,119 +42,182 @@ export default function LoginPage() {
     }
   };
 
+  const inputStyle = {
+    width: "100%",
+    padding: "12px 16px",
+    borderRadius: "12px",
+    border: `1.5px solid ${border}`,
+    backgroundColor: cream,
+    fontFamily: sans,
+    fontSize: "14px",
+    fontWeight: 300,
+    color: charcoal,
+    outline: "none",
+  };
+
+  const labelStyle = {
+    display: "block",
+    fontSize: "10px",
+    fontWeight: 600,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+    color: muted,
+    marginBottom: "8px",
+  };
+
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
-      style={{ backgroundColor: s.cream }}
+      style={{
+        minHeight: "100vh",
+        backgroundColor: cream,
+        fontFamily: sans,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "48px 20px",
+      }}
     >
       {/* Logo */}
-      <div className="mb-10 text-center">
+      <div style={{ textAlign: "center", marginBottom: "32px" }}>
         <img
           src="https://zestr.co.uk/zestr-logo-new.png"
           alt="Zest:r"
-          style={{ height: "32px", margin: "0 auto 8px" }}
+          style={{ height: "30px", display: "block", margin: "0 auto 8px" }}
         />
         <p
-          className="text-xs tracking-widest uppercase"
-          style={{ color: s.muted, ...s.sans }}
+          style={{
+            fontSize: "10px",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: muted,
+            fontWeight: 500,
+          }}
         >
           Learning
         </p>
       </div>
 
+      {/* Card */}
       <div
-        className="w-full max-w-md rounded-3xl overflow-hidden shadow-lg"
-        style={{ border: `1px solid ${s.border}`, backgroundColor: "white" }}
+        style={{
+          width: "100%",
+          maxWidth: "440px",
+          backgroundColor: "white",
+          borderRadius: "24px",
+          overflow: "hidden",
+          boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
+          border: `1px solid ${border}`,
+        }}
       >
         {/* Header */}
         <div
-          className="px-8 pt-8 pb-6 text-center"
-          style={{ backgroundColor: "#014A43" }}
+          style={{
+            backgroundColor: darkTeal,
+            padding: "36px 40px 32px",
+            textAlign: "center",
+          }}
         >
           <p
-            className="text-xs font-semibold tracking-widest uppercase mb-2"
-            style={{ color: "rgba(255,255,255,0.55)", ...s.sans }}
+            style={{
+              fontSize: "10px",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.55)",
+              fontWeight: 600,
+              marginBottom: "10px",
+            }}
           >
             Welcome back
           </p>
-          <h1 className="text-3xl font-light text-white" style={s.serif}>
+          <h1
+            style={{
+              fontFamily: serif,
+              fontSize: "36px",
+              fontWeight: 300,
+              color: "white",
+              margin: 0,
+              lineHeight: 1.2,
+            }}
+          >
             Continue learning.
           </h1>
         </div>
 
         {/* Body */}
-        <div className="px-8 py-8">
+        <div style={{ padding: "36px 40px" }}>
           <form onSubmit={handleSubmit}>
-            <div className="space-y-4 mb-6">
-              <div>
-                <label
-                  className="block text-xs font-semibold uppercase tracking-widest mb-2"
-                  style={{ color: s.muted, ...s.sans }}
-                >
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  required
-                  className="w-full px-4 py-3 rounded-xl text-sm"
-                  style={{
-                    border: `1.5px solid ${s.border}`,
-                    backgroundColor: "#FAF8F3",
-                    color: s.charcoal,
-                    outline: "none",
-                    fontWeight: 300,
-                  }}
-                />
-              </div>
+            <div style={{ marginBottom: "16px" }}>
+              <label style={labelStyle}>Email address</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-              <div>
-                <label
-                  className="block text-xs font-semibold uppercase tracking-widest mb-2"
-                  style={{ color: s.muted, ...s.sans }}
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Your password"
-                  required
-                  className="w-full px-4 py-3 rounded-xl text-sm"
-                  style={{
-                    border: `1.5px solid ${s.border}`,
-                    backgroundColor: "#FAF8F3",
-                    color: s.charcoal,
-                    outline: "none",
-                    fontWeight: 300,
-                  }}
-                />
-              </div>
+            <div style={{ marginBottom: "28px" }}>
+              <label style={labelStyle}>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Your password"
+                required
+                style={inputStyle}
+              />
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 mb-4 text-center">{error}</p>
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: "#DC2626",
+                  marginBottom: "16px",
+                  textAlign: "center",
+                }}
+              >
+                {error}
+              </p>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 rounded-2xl font-semibold text-sm text-white transition-all mb-4"
               style={{
-                backgroundColor: loading ? "#9CA3AF" : s.sage,
+                width: "100%",
+                padding: "14px",
+                borderRadius: "100px",
+                backgroundColor: loading ? "#9CA3AF" : sage,
+                color: "white",
+                fontFamily: sans,
+                fontSize: "14px",
+                fontWeight: 600,
+                border: "none",
                 cursor: loading ? "not-allowed" : "pointer",
-                ...s.sans,
+                letterSpacing: "0.01em",
+                marginBottom: "20px",
               }}
             >
               {loading ? "Signing in..." : "Sign in →"}
             </button>
 
-            <p className="text-center text-xs" style={{ color: s.muted }}>
+            <p
+              style={{
+                textAlign: "center",
+                fontSize: "13px",
+                color: muted,
+                fontWeight: 300,
+              }}
+            >
               Have a new access code?{" "}
-              <a href="/redeem" style={{ color: s.sage, fontWeight: 500 }}>
+              <a
+                href="/redeem"
+                style={{ color: sage, fontWeight: 500, textDecoration: "none" }}
+              >
                 Redeem it here
               </a>
             </p>
@@ -166,7 +225,14 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <p className="text-xs text-center mt-6" style={{ color: "#AEAAA0" }}>
+      <p
+        style={{
+          fontSize: "12px",
+          color: "#AEAAA0",
+          marginTop: "24px",
+          textAlign: "center",
+        }}
+      >
         Zest:r · david@zestr.co.uk
       </p>
     </div>

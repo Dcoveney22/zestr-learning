@@ -1,20 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const s = {
-  sage: "#01796F",
-  cream: "#FAF8F3",
-  charcoal: "#1C1C1A",
-  muted: "#6B6B60",
-  border: "#E8E4DC",
-  terracotta: "#CD5C5C",
-  serif: { fontFamily: "'Cormorant Garamond', Georgia, serif" },
-  sans: { fontFamily: "'DM Sans', system-ui, sans-serif" },
-};
-
-// ── Content config ─────────────────────────────────────────────────────────
-// This is where you define the episodes for each bundle.
-// episode audio_url will point to Cloudflare R2 once files are uploaded.
+const sage = "#01796F";
+const cream = "#FAF8F3";
+const charcoal = "#1C1C1A";
+const muted = "#6B6B60";
+const border = "#E8E4DC";
+const darkTeal = "#014A43";
+const terracotta = "#CD5C5C";
+const serif = "'Cormorant Garamond', Georgia, serif";
+const sans = "'DM Sans', system-ui, sans-serif";
 
 const BUNDLE_CONTENT = {
   "stay-sharp-on-shift-30": {
@@ -81,42 +76,53 @@ const BUNDLE_CONTENT = {
 
 function ProgressRing({ progress, total }) {
   const pct = total === 0 ? 0 : Math.round((progress / total) * 100);
-  const r = 28;
+  const r = 26;
   const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
-
   return (
     <div
-      className="relative flex items-center justify-center"
-      style={{ width: 72, height: 72 }}
+      style={{
+        position: "relative",
+        width: "68px",
+        height: "68px",
+        flexShrink: 0,
+      }}
     >
-      <svg width="72" height="72" style={{ transform: "rotate(-90deg)" }}>
+      <svg width="68" height="68" style={{ transform: "rotate(-90deg)" }}>
         <circle
-          cx="36"
-          cy="36"
+          cx="34"
+          cy="34"
           r={r}
           fill="none"
-          stroke="#E8E4DC"
+          stroke={border}
           strokeWidth="4"
         />
         <circle
-          cx="36"
-          cy="36"
+          cx="34"
+          cy="34"
           r={r}
           fill="none"
-          stroke={s.sage}
+          stroke={sage}
           strokeWidth="4"
           strokeDasharray={`${dash} ${circ}`}
           strokeLinecap="round"
-          style={{ transition: "stroke-dasharray 0.5s ease" }}
         />
       </svg>
-      <span
-        className="absolute text-sm font-semibold"
-        style={{ color: s.sage }}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "13px",
+          fontWeight: 600,
+          color: sage,
+          fontFamily: sans,
+        }}
       >
         {pct}%
-      </span>
+      </div>
     </div>
   );
 }
@@ -158,44 +164,83 @@ export default function DashboardPage() {
     navigate("/login");
   };
 
-  if (loading) {
+  if (loading)
     return (
       <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ backgroundColor: s.cream }}
+        style={{
+          minHeight: "100vh",
+          backgroundColor: cream,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <div className="text-center">
+        <div style={{ textAlign: "center" }}>
           <div
-            className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin mx-auto mb-3"
-            style={{ borderColor: s.sage, borderTopColor: "transparent" }}
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              border: `2px solid ${sage}`,
+              borderTopColor: "transparent",
+              animation: "spin 0.8s linear infinite",
+              margin: "0 auto 12px",
+            }}
           />
-          <p className="text-sm" style={{ color: s.muted }}>
+          <p
+            style={{
+              fontSize: "14px",
+              color: muted,
+              fontFamily: sans,
+              fontWeight: 300,
+            }}
+          >
             Loading your bundle...
           </p>
         </div>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
-  }
 
-  if (error) {
+  if (error)
     return (
       <div
-        className="min-h-screen flex items-center justify-center px-4"
-        style={{ backgroundColor: s.cream }}
+        style={{
+          minHeight: "100vh",
+          backgroundColor: cream,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "24px",
+        }}
       >
-        <div className="text-center">
-          <p className="text-sm text-red-600 mb-4">{error}</p>
+        <div style={{ textAlign: "center" }}>
+          <p
+            style={{
+              fontSize: "14px",
+              color: "#DC2626",
+              marginBottom: "16px",
+              fontFamily: sans,
+            }}
+          >
+            {error}
+          </p>
           <button
             onClick={loadBundle}
-            className="text-sm"
-            style={{ color: s.sage }}
+            style={{
+              fontSize: "14px",
+              color: sage,
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              fontFamily: sans,
+            }}
           >
             Try again
           </button>
         </div>
       </div>
     );
-  }
 
   const content = BUNDLE_CONTENT[bundle?.experience?.slug] || null;
   const episodes = content?.episodes || [];
@@ -203,13 +248,11 @@ export default function DashboardPage() {
   const listenedCount = episodes.filter((e) =>
     listenedSlugs.includes(e.slug),
   ).length;
-
   const expiresAt = bundle?.user?.expires_at
     ? new Date(bundle.user.expires_at)
     : null;
   const daysRemaining = bundle?.user?.days_remaining ?? 0;
   const isExpired = bundle?.user?.is_expired;
-
   const formatDate = (d) =>
     d?.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -219,152 +262,275 @@ export default function DashboardPage() {
 
   return (
     <div
-      className="min-h-screen"
-      style={{ backgroundColor: s.cream, ...s.sans }}
+      style={{ minHeight: "100vh", backgroundColor: cream, fontFamily: sans }}
     >
-      {/* ── NAV ── */}
+      {/* Nav */}
       <nav
-        className="sticky top-0 z-10 px-5 py-4 flex items-center justify-between"
         style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
           backgroundColor: "white",
-          borderBottom: `1px solid ${s.border}`,
+          borderBottom: `1px solid ${border}`,
+          padding: "0 20px",
+          height: "56px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
-        <div className="flex items-center gap-3">
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img
             src="https://zestr.co.uk/zestr-logo-new.png"
             alt="Zest:r"
-            style={{ height: "24px" }}
+            style={{ height: "22px" }}
           />
           <span
-            className="text-xs font-medium tracking-widest uppercase px-2 py-0.5 rounded-full"
-            style={{ backgroundColor: "#F0F9F7", color: s.sage }}
+            style={{
+              fontSize: "10px",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: sage,
+              backgroundColor: "#F0F9F7",
+              padding: "3px 8px",
+              borderRadius: "100px",
+            }}
           >
             Learning
           </span>
         </div>
         <button
           onClick={handleLogout}
-          className="text-xs"
-          style={{ color: s.muted, fontWeight: 300 }}
+          style={{
+            fontSize: "13px",
+            color: muted,
+            fontWeight: 300,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontFamily: sans,
+          }}
         >
           Sign out
         </button>
       </nav>
 
-      {/* ── HERO ── */}
-      <div className="px-5 pt-10 pb-8 max-w-2xl mx-auto">
+      {/* Hero band */}
+      <div style={{ backgroundColor: darkTeal, padding: "40px 20px 36px" }}>
+        <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+          <p
+            style={{
+              fontSize: "10px",
+              fontWeight: 600,
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.55)",
+              marginBottom: "10px",
+            }}
+          >
+            Assemble You · Podcast Learning
+          </p>
+          <h1
+            style={{
+              fontFamily: serif,
+              fontSize: "clamp(2rem, 5vw, 2.75rem)",
+              fontWeight: 300,
+              color: "white",
+              lineHeight: 1.2,
+              marginBottom: "8px",
+            }}
+          >
+            {content?.title || bundle?.experience?.name}
+          </h1>
+          <p
+            style={{
+              fontSize: "14px",
+              color: "rgba(255,255,255,0.6)",
+              fontWeight: 300,
+            }}
+          >
+            {content?.subtitle}
+          </p>
+        </div>
+      </div>
+
+      <div
+        style={{
+          maxWidth: "600px",
+          margin: "0 auto",
+          padding: "28px 20px 60px",
+        }}
+      >
         {/* Expired warning */}
         {isExpired && (
           <div
-            className="rounded-2xl px-5 py-4 mb-6 text-sm"
             style={{
               backgroundColor: "#FFF1F1",
               border: "1px solid #FEC5C5",
-              color: "#a83333",
+              borderRadius: "16px",
+              padding: "16px 20px",
+              marginBottom: "20px",
             }}
           >
-            Your access to this bundle expired on {formatDate(expiresAt)}.
-            Questions? Email{" "}
-            <a href="mailto:david@zestr.co.uk" style={{ fontWeight: 600 }}>
-              david@zestr.co.uk
-            </a>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#a83333",
+                fontWeight: 300,
+                lineHeight: 1.6,
+              }}
+            >
+              Your access expired on {formatDate(expiresAt)}. Questions?{" "}
+              <a
+                href="mailto:david@zestr.co.uk"
+                style={{ color: "#a83333", fontWeight: 600 }}
+              >
+                david@zestr.co.uk
+              </a>
+            </p>
           </div>
         )}
 
         {/* Access banner */}
-        {!isExpired && (
+        {!isExpired && expiresAt && (
           <div
-            className="rounded-2xl px-5 py-3 mb-8 flex items-center justify-between text-sm"
-            style={{ backgroundColor: "#F0F9F7", border: "1px solid #C5E8E3" }}
+            style={{
+              backgroundColor: "#F0F9F7",
+              border: "1px solid #C5E8E3",
+              borderRadius: "16px",
+              padding: "14px 20px",
+              marginBottom: "24px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
           >
-            <span style={{ color: "#1a5e55", fontWeight: 300 }}>
-              Access expires <strong>{formatDate(expiresAt)}</strong>
-            </span>
+            <p style={{ fontSize: "13px", color: "#1a5e55", fontWeight: 300 }}>
+              Access expires{" "}
+              <strong style={{ fontWeight: 600 }}>
+                {formatDate(expiresAt)}
+              </strong>
+            </p>
             <span
-              className="text-xs font-semibold px-2.5 py-1 rounded-full"
-              style={{ backgroundColor: s.sage, color: "white" }}
+              style={{
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "white",
+                backgroundColor: sage,
+                padding: "4px 10px",
+                borderRadius: "100px",
+              }}
             >
               {daysRemaining}d left
             </span>
           </div>
         )}
 
-        {/* Bundle header */}
-        <div className="flex items-start justify-between gap-6 mb-8">
-          <div className="flex-1">
+        {/* Progress card */}
+        <div
+          style={{
+            backgroundColor: "white",
+            border: `1px solid ${border}`,
+            borderRadius: "20px",
+            padding: "24px 28px",
+            marginBottom: "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "20px",
+          }}
+        >
+          <div>
             <p
-              className="text-xs font-semibold tracking-widest uppercase mb-2"
-              style={{ color: s.sage }}
+              style={{
+                fontSize: "10px",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: muted,
+                marginBottom: "6px",
+              }}
             >
-              Assemble You · Podcast Learning
+              Your progress
             </p>
-            <h1
-              className="text-3xl font-light leading-snug mb-2"
-              style={{ ...s.serif, color: s.charcoal }}
-            >
-              {content?.title || bundle?.experience?.name}
-            </h1>
             <p
-              className="text-sm leading-relaxed"
-              style={{ color: s.muted, fontWeight: 300 }}
+              style={{
+                fontFamily: serif,
+                fontSize: "28px",
+                fontWeight: 300,
+                color: charcoal,
+                lineHeight: 1,
+              }}
             >
-              {content?.subtitle}
+              {listenedCount} of {episodes.length}
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                color: muted,
+                fontWeight: 300,
+                marginTop: "4px",
+              }}
+            >
+              episodes listened
             </p>
           </div>
           <ProgressRing progress={listenedCount} total={episodes.length} />
         </div>
 
-        <p
-          className="text-sm leading-relaxed mb-8"
-          style={{ color: s.muted, fontWeight: 300 }}
-        >
-          {content?.description}
-        </p>
-
-        {/* Progress summary */}
+        {/* About */}
         <div
-          className="rounded-2xl px-5 py-4 mb-8 flex items-center justify-between"
-          style={{ backgroundColor: "white", border: `1px solid ${s.border}` }}
+          style={{
+            backgroundColor: "white",
+            border: `1px solid ${border}`,
+            borderRadius: "20px",
+            padding: "24px 28px",
+            marginBottom: "24px",
+          }}
         >
-          <div>
-            <p
-              className="text-xs uppercase tracking-widest font-semibold mb-0.5"
-              style={{ color: s.muted }}
-            >
-              Your progress
-            </p>
-            <p
-              className="text-2xl font-light"
-              style={{ ...s.serif, color: s.charcoal }}
-            >
-              {listenedCount} of {episodes.length} episodes
-            </p>
-          </div>
-          {listenedCount === episodes.length && episodes.length > 0 && (
-            <div
-              className="px-3 py-1.5 rounded-full text-xs font-semibold"
-              style={{
-                backgroundColor: "#F0F9F7",
-                color: s.sage,
-                border: "1px solid #C5E8E3",
-              }}
-            >
-              ✓ Complete
-            </div>
-          )}
+          <p
+            style={{
+              fontSize: "10px",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: muted,
+              marginBottom: "12px",
+            }}
+          >
+            About this bundle
+          </p>
+          <p
+            style={{
+              fontSize: "14px",
+              color: muted,
+              fontWeight: 300,
+              lineHeight: 1.7,
+            }}
+          >
+            {content?.description}
+          </p>
         </div>
 
-        {/* Episodes list */}
+        {/* Episodes */}
         <div>
-          <h2
-            className="text-xs font-semibold uppercase tracking-widest mb-4"
-            style={{ color: s.muted }}
+          <p
+            style={{
+              fontSize: "10px",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: muted,
+              marginBottom: "16px",
+            }}
           >
             Episodes
-          </h2>
+          </p>
 
-          <div className="space-y-3">
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
             {episodes.map((ep, i) => {
               const listened = listenedSlugs.includes(ep.slug);
               const available = !!ep.audio_url;
@@ -375,65 +541,112 @@ export default function DashboardPage() {
                   onClick={() =>
                     available && !isExpired && navigate(`/listen/${ep.slug}`)
                   }
-                  className="rounded-2xl px-5 py-4 flex items-center gap-4 transition-all"
                   style={{
                     backgroundColor: "white",
-                    border: `1px solid ${listened ? "#C5E8E3" : s.border}`,
+                    border: `1px solid ${listened ? "#C5E8E3" : border}`,
+                    borderRadius: "16px",
+                    padding: "16px 20px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "16px",
                     cursor: available && !isExpired ? "pointer" : "default",
                     opacity: isExpired ? 0.6 : 1,
+                    transition: "box-shadow 0.15s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (available && !isExpired)
+                      e.currentTarget.style.boxShadow =
+                        "0 4px 16px rgba(0,0,0,0.06)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = "none";
                   }}
                 >
                   {/* Number / check */}
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-semibold"
                     style={{
-                      backgroundColor: listened ? s.sage : "#F5F5F5",
-                      color: listened ? "white" : s.muted,
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "50%",
+                      backgroundColor: listened ? sage : "#F5F5F5",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      color: listened ? "white" : muted,
                     }}
                   >
                     {listened ? "✓" : i + 1}
                   </div>
 
-                  <div className="flex-1 min-w-0">
+                  {/* Info */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <p
-                      className="text-sm font-medium"
-                      style={{ color: s.charcoal }}
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        color: charcoal,
+                        marginBottom: "2px",
+                      }}
                     >
                       {ep.title}
                     </p>
                     <p
-                      className="text-xs mt-0.5"
-                      style={{ color: s.muted, fontWeight: 300 }}
+                      style={{
+                        fontSize: "12px",
+                        color: muted,
+                        fontWeight: 300,
+                      }}
                     >
                       {ep.description}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3 flex-shrink-0">
-                    <span className="text-xs" style={{ color: s.muted }}>
+                  {/* Duration + play */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span style={{ fontSize: "12px", color: muted }}>
                       {ep.duration}
                     </span>
-                    {available && !isExpired && (
+                    {available && !isExpired ? (
                       <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center"
                         style={{
-                          backgroundColor: listened ? "#F0F9F7" : s.sage,
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "50%",
+                          backgroundColor: listened ? "#F0F9F7" : sage,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
                         <svg
-                          width="12"
-                          height="12"
+                          width="11"
+                          height="11"
                           viewBox="0 0 24 24"
-                          fill={listened ? s.sage : "white"}
+                          fill={listened ? sage : "white"}
                         >
                           <polygon points="5,3 19,12 5,21" />
                         </svg>
                       </div>
-                    )}
-                    {!available && (
+                    ) : (
                       <span
-                        className="text-xs px-2 py-1 rounded-full"
-                        style={{ backgroundColor: "#F5F5F5", color: s.muted }}
+                        style={{
+                          fontSize: "11px",
+                          color: muted,
+                          fontWeight: 500,
+                          backgroundColor: "#F5F5F5",
+                          padding: "4px 10px",
+                          borderRadius: "100px",
+                        }}
                       >
                         Soon
                       </span>
@@ -447,16 +660,30 @@ export default function DashboardPage() {
 
         {/* Footer */}
         <div
-          className="mt-12 pt-6 text-center"
-          style={{ borderTop: `1px solid ${s.border}` }}
+          style={{
+            marginTop: "48px",
+            paddingTop: "24px",
+            borderTop: `1px solid ${border}`,
+            textAlign: "center",
+          }}
         >
-          <p className="text-xs" style={{ color: "#AEAAA0" }}>
-            Questions about your bundle?{" "}
-            <a href="mailto:david@zestr.co.uk" style={{ color: s.sage }}>
+          <p style={{ fontSize: "12px", color: "#AEAAA0" }}>
+            Questions?{" "}
+            <a
+              href="mailto:david@zestr.co.uk"
+              style={{ color: sage, textDecoration: "none" }}
+            >
               david@zestr.co.uk
             </a>
           </p>
-          <p className="text-xs mt-1" style={{ color: "#AEAAA0" }}>
+          <p
+            style={{
+              fontSize: "11px",
+              color: "#AEAAA0",
+              marginTop: "4px",
+              fontWeight: 300,
+            }}
+          >
             Zest:r Learning · Powered by Assemble You
           </p>
         </div>

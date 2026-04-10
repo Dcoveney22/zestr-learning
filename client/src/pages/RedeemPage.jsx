@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const s = {
-  sage: "#01796F",
-  cream: "#FAF8F3",
-  charcoal: "#1C1C1A",
-  muted: "#6B6B60",
-  border: "#E8E4DC",
-  serif: { fontFamily: "'Cormorant Garamond', Georgia, serif" },
-  sans: { fontFamily: "'DM Sans', system-ui, sans-serif" },
-};
+const sage = "#01796F";
+const cream = "#FAF8F3";
+const charcoal = "#1C1C1A";
+const muted = "#6B6B60";
+const border = "#E8E4DC";
+const darkTeal = "#014A43";
+const serif = "'Cormorant Garamond', Georgia, serif";
+const sans = "'DM Sans', system-ui, sans-serif";
 
 export default function RedeemPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [step, setStep] = useState("code"); // "code" | "account"
+  const [step, setStep] = useState("code");
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,30 +22,26 @@ export default function RedeemPage() {
   const [optIn, setOptIn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [voucherInfo, setVoucherInfo] = useState(null);
 
   useEffect(() => {
     const urlCode = searchParams.get("code");
     if (urlCode) setCode(urlCode.toUpperCase());
   }, [searchParams]);
 
-  const handleCodeSubmit = async (e) => {
+  const handleCodeSubmit = (e) => {
     e.preventDefault();
     if (!code.trim()) return;
-    setStep("account");
     setError("");
+    setStep("account");
   };
 
   const handleAccountSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (password !== confirmPassword) {
+    if (password !== confirmPassword)
       return setError("Passwords do not match.");
-    }
-    if (password.length < 8) {
+    if (password.length < 8)
       return setError("Password must be at least 8 characters.");
-    }
 
     setLoading(true);
     try {
@@ -56,18 +51,14 @@ export default function RedeemPage() {
         body: JSON.stringify({ code: code.trim(), email, password }),
       });
       const data = await res.json();
-
       if (!res.ok) {
-        if (data.error?.includes("already exists")) {
-          setError(
-            "An account with this email already exists. Please log in instead.",
-          );
-        } else {
-          setError(data.error || "Something went wrong.");
-        }
+        setError(
+          data.error?.includes("already exists")
+            ? "An account with this email already exists. Please log in."
+            : data.error || "Something went wrong.",
+        );
         return;
       }
-
       localStorage.setItem("learning_token", data.token);
       localStorage.setItem("learning_user", JSON.stringify(data.user));
       navigate("/dashboard");
@@ -82,72 +73,111 @@ export default function RedeemPage() {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: s.cream,
+        backgroundColor: cream,
+        fontFamily: sans,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "48px 16px",
+        padding: "48px 20px",
       }}
     >
       {/* Logo */}
-      <div className="mb-10 text-center">
+      <div style={{ textAlign: "center", marginBottom: "32px" }}>
         <img
           src="https://zestr.co.uk/zestr-logo-new.png"
           alt="Zest:r"
-          style={{ height: "32px", margin: "0 auto 8px" }}
+          style={{ height: "30px", display: "block", margin: "0 auto 8px" }}
         />
         <p
-          className="text-xs tracking-widest uppercase"
-          style={{ color: s.muted, ...s.sans }}
+          style={{
+            fontSize: "10px",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: muted,
+            fontWeight: 500,
+          }}
         >
           Learning
         </p>
       </div>
 
+      {/* Card */}
       <div
         style={{
           width: "100%",
-          maxWidth: "448px",
+          maxWidth: "440px",
+          backgroundColor: "white",
           borderRadius: "24px",
           overflow: "hidden",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
-          border: `1px solid ${s.border}`,
-          backgroundColor: "white",
+          boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
+          border: `1px solid ${border}`,
         }}
       >
         {/* Header */}
         <div
-          className="px-8 pt-8 pb-6 text-center"
-          style={{ backgroundColor: "#014A43" }}
+          style={{
+            backgroundColor: darkTeal,
+            padding: "36px 40px 32px",
+            textAlign: "center",
+          }}
         >
           <p
-            className="text-xs font-semibold tracking-widest uppercase mb-2"
-            style={{ color: "rgba(255,255,255,0.55)", ...s.sans }}
+            style={{
+              fontSize: "10px",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.55)",
+              fontWeight: 600,
+              marginBottom: "10px",
+              fontFamily: sans,
+            }}
           >
             {step === "code" ? "Unlock your bundle" : "Create your account"}
           </p>
-          <h1 className="text-3xl font-light text-white" style={s.serif}>
+          <h1
+            style={{
+              fontFamily: serif,
+              fontSize: "36px",
+              fontWeight: 300,
+              color: "white",
+              margin: 0,
+              lineHeight: 1.2,
+            }}
+          >
             {step === "code" ? "Time to learn." : "Almost there."}
           </h1>
         </div>
 
         {/* Body */}
-        <div className="px-8 py-8">
+        <div style={{ padding: "36px 40px" }}>
           {step === "code" ? (
             <form onSubmit={handleCodeSubmit}>
               <p
-                className="text-sm mb-6 leading-relaxed"
-                style={{ color: s.muted, ...s.sans, fontWeight: 300 }}
+                style={{
+                  fontSize: "14px",
+                  color: muted,
+                  fontWeight: 300,
+                  lineHeight: 1.7,
+                  marginBottom: "28px",
+                  textAlign: "center",
+                }}
               >
                 Enter the access code from your Zest:r redemption email to
                 unlock your podcast learning bundle.
               </p>
 
-              <div className="mb-6">
+              <div style={{ marginBottom: "24px" }}>
                 <label
-                  className="block text-xs font-semibold uppercase tracking-widest mb-2"
-                  style={{ color: s.muted, ...s.sans }}
+                  style={{
+                    display: "block",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: muted,
+                    marginBottom: "8px",
+                  }}
                 >
                   Access Code
                 </label>
@@ -157,51 +187,100 @@ export default function RedeemPage() {
                   onChange={(e) => setCode(e.target.value.toUpperCase())}
                   placeholder="ZESTR-XXXXXX"
                   required
-                  className="w-full px-4 py-3 rounded-xl text-center font-bold tracking-widest"
                   style={{
+                    width: "100%",
+                    padding: "14px 16px",
+                    borderRadius: "12px",
+                    border: `1.5px solid ${border}`,
+                    backgroundColor: cream,
                     fontFamily: "monospace",
                     fontSize: "18px",
-                    border: `1.5px solid ${s.border}`,
-                    backgroundColor: "#FAF8F3",
-                    color: s.charcoal,
+                    fontWeight: 700,
+                    letterSpacing: "0.15em",
+                    textAlign: "center",
+                    color: charcoal,
                     outline: "none",
                   }}
                 />
               </div>
 
               {error && (
-                <p className="text-sm text-red-600 mb-4 text-center">{error}</p>
+                <p
+                  style={{
+                    fontSize: "13px",
+                    color: "#DC2626",
+                    marginBottom: "16px",
+                    textAlign: "center",
+                  }}
+                >
+                  {error}
+                </p>
               )}
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-2xl font-semibold text-sm text-white transition-all"
-                style={{ backgroundColor: s.sage, ...s.sans }}
+                style={{
+                  width: "100%",
+                  padding: "14px",
+                  borderRadius: "100px",
+                  backgroundColor: sage,
+                  color: "white",
+                  fontFamily: sans,
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  border: "none",
+                  cursor: "pointer",
+                  letterSpacing: "0.01em",
+                  marginBottom: "20px",
+                }}
               >
                 Continue →
               </button>
 
               <p
-                className="text-center text-xs mt-4"
-                style={{ color: s.muted }}
+                style={{
+                  textAlign: "center",
+                  fontSize: "13px",
+                  color: muted,
+                  fontWeight: 300,
+                }}
               >
                 Already have an account?{" "}
-                <a href="/login" style={{ color: s.sage, fontWeight: 500 }}>
+                <a
+                  href="/login"
+                  style={{
+                    color: sage,
+                    fontWeight: 500,
+                    textDecoration: "none",
+                  }}
+                >
                   Log in
                 </a>
               </p>
             </form>
           ) : (
             <form onSubmit={handleAccountSubmit}>
+              {/* Code confirmation chip */}
               <div
-                className="rounded-xl px-4 py-3 mb-6 text-sm"
                 style={{
                   backgroundColor: "#F0F9F7",
-                  border: `1px solid #C5E8E3`,
+                  border: "1px solid #C5E8E3",
+                  borderRadius: "12px",
+                  padding: "12px 16px",
+                  marginBottom: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                <p style={{ color: "#1a5e55", fontWeight: 400 }}>
-                  Access code:{" "}
+                <p
+                  style={{
+                    fontSize: "13px",
+                    color: "#1a5e55",
+                    fontWeight: 400,
+                  }}
+                >
+                  Code:{" "}
                   <strong
                     style={{ fontFamily: "monospace", letterSpacing: "0.1em" }}
                   >
@@ -214,107 +293,169 @@ export default function RedeemPage() {
                     setStep("code");
                     setError("");
                   }}
-                  className="text-xs mt-1"
-                  style={{ color: s.sage }}
+                  style={{
+                    fontSize: "12px",
+                    color: sage,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontWeight: 500,
+                  }}
                 >
-                  Change code
+                  Change
                 </button>
               </div>
 
               <p
-                className="text-sm mb-6 leading-relaxed"
-                style={{ color: s.muted, fontWeight: 300 }}
+                style={{
+                  fontSize: "14px",
+                  color: muted,
+                  fontWeight: 300,
+                  lineHeight: 1.7,
+                  marginBottom: "24px",
+                }}
               >
-                Create your free account to access your learning bundle. We'll
-                use your email to save your progress.
+                Create your free account to access your learning bundle and save
+                your progress.
               </p>
 
-              <div className="space-y-4 mb-6">
-                <div>
-                  <label
-                    className="block text-xs font-semibold uppercase tracking-widest mb-2"
-                    style={{ color: s.muted }}
-                  >
-                    Email address
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    required
-                    className="w-full px-4 py-3 rounded-xl text-sm"
-                    style={{
-                      border: `1.5px solid ${s.border}`,
-                      backgroundColor: "#FAF8F3",
-                      color: s.charcoal,
-                      outline: "none",
-                      fontWeight: 300,
-                    }}
-                  />
-                </div>
+              {/* Email */}
+              <div style={{ marginBottom: "16px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: muted,
+                    marginBottom: "8px",
+                  }}
+                >
+                  Email address
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    borderRadius: "12px",
+                    border: `1.5px solid ${border}`,
+                    backgroundColor: cream,
+                    fontFamily: sans,
+                    fontSize: "14px",
+                    fontWeight: 300,
+                    color: charcoal,
+                    outline: "none",
+                  }}
+                />
+              </div>
 
-                <div>
-                  <label
-                    className="block text-xs font-semibold uppercase tracking-widest mb-2"
-                    style={{ color: s.muted }}
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="At least 8 characters"
-                    required
-                    className="w-full px-4 py-3 rounded-xl text-sm"
-                    style={{
-                      border: `1.5px solid ${s.border}`,
-                      backgroundColor: "#FAF8F3",
-                      color: s.charcoal,
-                      outline: "none",
-                      fontWeight: 300,
-                    }}
-                  />
-                </div>
+              {/* Password */}
+              <div style={{ marginBottom: "16px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: muted,
+                    marginBottom: "8px",
+                  }}
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="At least 8 characters"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    borderRadius: "12px",
+                    border: `1.5px solid ${border}`,
+                    backgroundColor: cream,
+                    fontFamily: sans,
+                    fontSize: "14px",
+                    fontWeight: 300,
+                    color: charcoal,
+                    outline: "none",
+                  }}
+                />
+              </div>
 
-                <div>
-                  <label
-                    className="block text-xs font-semibold uppercase tracking-widest mb-2"
-                    style={{ color: s.muted }}
-                  >
-                    Confirm password
-                  </label>
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Repeat your password"
-                    required
-                    className="w-full px-4 py-3 rounded-xl text-sm"
-                    style={{
-                      border: `1.5px solid ${s.border}`,
-                      backgroundColor: "#FAF8F3",
-                      color: s.charcoal,
-                      outline: "none",
-                      fontWeight: 300,
-                    }}
-                  />
-                </div>
+              {/* Confirm password */}
+              <div style={{ marginBottom: "24px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: muted,
+                    marginBottom: "8px",
+                  }}
+                >
+                  Confirm password
+                </label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Repeat your password"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    borderRadius: "12px",
+                    border: `1.5px solid ${border}`,
+                    backgroundColor: cream,
+                    fontFamily: sans,
+                    fontSize: "14px",
+                    fontWeight: 300,
+                    color: charcoal,
+                    outline: "none",
+                  }}
+                />
               </div>
 
               {/* Opt in */}
-              <label className="flex items-start gap-3 mb-6 cursor-pointer">
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                  marginBottom: "24px",
+                  cursor: "pointer",
+                }}
+              >
                 <input
                   type="checkbox"
                   checked={optIn}
                   onChange={(e) => setOptIn(e.target.checked)}
-                  className="mt-0.5 flex-shrink-0"
-                  style={{ accentColor: s.sage, width: "16px", height: "16px" }}
+                  style={{
+                    marginTop: "2px",
+                    accentColor: sage,
+                    width: "15px",
+                    height: "15px",
+                    flexShrink: 0,
+                  }}
                 />
                 <span
-                  className="text-xs leading-relaxed"
-                  style={{ color: s.muted, fontWeight: 300 }}
+                  style={{
+                    fontSize: "12px",
+                    color: muted,
+                    fontWeight: 300,
+                    lineHeight: 1.6,
+                  }}
                 >
                   Keep me updated on new learning rewards and experiences from
                   Zest:r
@@ -322,28 +463,56 @@ export default function RedeemPage() {
               </label>
 
               {error && (
-                <p className="text-sm text-red-600 mb-4 text-center">{error}</p>
+                <p
+                  style={{
+                    fontSize: "13px",
+                    color: "#DC2626",
+                    marginBottom: "16px",
+                    textAlign: "center",
+                  }}
+                >
+                  {error}
+                </p>
               )}
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-2xl font-semibold text-sm text-white transition-all"
                 style={{
-                  backgroundColor: loading ? "#9CA3AF" : s.sage,
+                  width: "100%",
+                  padding: "14px",
+                  borderRadius: "100px",
+                  backgroundColor: loading ? "#9CA3AF" : sage,
+                  color: "white",
+                  fontFamily: sans,
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  border: "none",
                   cursor: loading ? "not-allowed" : "pointer",
-                  ...s.sans,
+                  letterSpacing: "0.01em",
+                  marginBottom: "20px",
                 }}
               >
                 {loading ? "Creating your account..." : "Start learning →"}
               </button>
 
               <p
-                className="text-center text-xs mt-4"
-                style={{ color: s.muted }}
+                style={{
+                  textAlign: "center",
+                  fontSize: "13px",
+                  color: muted,
+                  fontWeight: 300,
+                }}
               >
                 Already have an account?{" "}
-                <a href="/login" style={{ color: s.sage, fontWeight: 500 }}>
+                <a
+                  href="/login"
+                  style={{
+                    color: sage,
+                    fontWeight: 500,
+                    textDecoration: "none",
+                  }}
+                >
                   Log in
                 </a>
               </p>
@@ -352,7 +521,14 @@ export default function RedeemPage() {
         </div>
       </div>
 
-      <p className="text-xs text-center mt-6" style={{ color: "#AEAAA0" }}>
+      <p
+        style={{
+          fontSize: "12px",
+          color: "#AEAAA0",
+          marginTop: "24px",
+          textAlign: "center",
+        }}
+      >
         Zest:r · david@zestr.co.uk
       </p>
     </div>
