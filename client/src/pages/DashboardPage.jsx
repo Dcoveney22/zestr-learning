@@ -401,18 +401,52 @@ function BundleCard({ bundle, onOpen }) {
             backgroundColor: "rgba(255,255,255,0.05)",
           }}
         />
-        <p
+        <div
           style={{
-            fontSize: "10px",
-            fontWeight: 600,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.55)",
-            margin: "0 0 8px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            marginBottom: "10px",
+            lineHeight: 1,
           }}
         >
-          Assemble You · Podcast Learning
-        </p>
+          <img
+            src={AY_LOGO}
+            alt="Assemble You"
+            style={{
+              height: "16px",
+              width: "auto",
+              filter: "brightness(0) invert(1)",
+              display: "block",
+              flexShrink: 0,
+            }}
+          />
+
+          <span
+            style={{
+              color: "rgba(255,255,255,0.55)",
+              fontSize: "10px",
+              lineHeight: 1,
+              display: "block",
+            }}
+          >
+            ·
+          </span>
+
+          <span
+            style={{
+              fontSize: "10px",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.75)",
+              lineHeight: 1,
+              display: "block",
+            }}
+          >
+            Podcast Learning
+          </span>
+        </div>
         <h3
           style={{
             fontFamily: serif,
@@ -664,17 +698,36 @@ function BundleDetail({ bundle, onBack, showBack, navigate }) {
             marginBottom: "16px",
           }}
         >
-          <span
+          <div
             style={{
-              fontSize: "10px",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.7)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              marginBottom: "0",
+              lineHeight: 1,
             }}
           >
-            Assemble You · Podcast Learning
-          </span>
+            <img
+              src={AY_LOGO}
+              alt="Assemble You"
+              style={{
+                height: "16px",
+                opacity: 0.9,
+                filter: "brightness(0) invert(1)",
+              }}
+            />
+            <span
+              style={{
+                fontSize: "10px",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.75)",
+              }}
+            >
+              Podcast Learning
+            </span>
+          </div>
         </div>
 
         <div
@@ -1278,7 +1331,7 @@ export default function DashboardPage() {
         >
           <div
             style={{
-              backgroundColor: "#F8F9FF",
+              backgroundColor: "#F3F6FF",
               borderBottom: `1px solid ${border}`,
               padding: "16px 24px",
               display: "flex",
@@ -1298,11 +1351,21 @@ export default function DashboardPage() {
             >
               Content partner
             </p>
-            <img
-              src={AY_LOGO}
-              alt="Assemble You"
-              style={{ height: "28px", opacity: 0.85 }}
-            />
+            <div
+              style={{
+                backgroundColor: "#3A3A38",
+                padding: "4px 10px",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={AY_LOGO}
+                alt="Assemble You"
+                style={{ height: "28px", opacity: 1 }}
+              />
+            </div>
           </div>
           <div style={{ padding: "20px 24px" }}>
             <p
