@@ -10,24 +10,195 @@ const darkTeal = "#014A43";
 const serif = "'Cormorant Garamond', Georgia, serif";
 const sans = "'DM Sans', system-ui, sans-serif";
 
+const R2 = "https://pub-512f258a3cf144b58fe2e982a3f16394.r2.dev";
+
 const ALL_EPISODES = {
-  "ssos-01": {
-    title: "Episode 1",
+  // ── Stay Sharp on Shift ───────────────────────────────────────────
+  "ssos-avoiding-burnout": {
+    title: "Avoiding Burnout",
     bundle: "Stay Sharp on Shift",
-    description: "Coming soon — check back shortly.",
-    duration: "~8 mins",
-    audio_url: null,
-    transcript_url: null,
-    infographic_url: null,
+    description:
+      "Understand burnout, why it happens, and practical steps to stop it in its tracks.",
+    duration: "8 mins",
+    audio_url: `${R2}/stay-sharp/mp3/avoiding-burnout.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/avoiding-burnout.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/avoiding-burnout.pdf`,
   },
-  "ls-01": {
-    title: "Episode 1",
-    bundle: "Leadership Sprint",
-    description: "Coming soon — check back shortly.",
-    duration: "~8 mins",
-    audio_url: null,
-    transcript_url: null,
-    infographic_url: null,
+  "ssos-confidence-at-work": {
+    title: "Confidence at Work",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Build the kind of quiet confidence that shows up when it matters most.",
+    duration: "11 mins",
+    audio_url: `${R2}/stay-sharp/mp3/confidence-at-work.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/confidence-at-work.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/confidence-at-work.pdf`,
+  },
+  "ssos-how-to-manage-your-time": {
+    title: "How to Manage Your Time",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Practical techniques to take control of your time on and off shift.",
+    duration: "11 mins",
+    audio_url: `${R2}/stay-sharp/mp3/how-to-manage-your-time.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/how-to-manage-your-time.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/how-to-manage-your-time.pdf`,
+  },
+  "ssos-difficult-customers": {
+    title: "How to Deal With Difficult Customers",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Stay calm, stay professional, and turn difficult moments into positive ones.",
+    duration: "10 mins",
+    audio_url: `${R2}/stay-sharp/mp3/how-to-deal-with-difficult-customers.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/how-to-deal-with-difficult-customers.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/how-to-deal-with-difficult-customers.pdf`,
+  },
+  "ssos-keeping-energy-high": {
+    title: "Keeping Your Energy High",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Simple habits to maintain your energy through even the longest shifts.",
+    duration: "10 mins",
+    audio_url: `${R2}/stay-sharp/mp3/keeping-your-energy-high.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/keeping-your-energy-high.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/keeping-your-energy-high.pdf`,
+  },
+  "ssos-managing-work-anxiety": {
+    title: "Managing Work Anxiety",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Recognise the signs of work anxiety and learn what to do about it.",
+    duration: "9 mins",
+    audio_url: `${R2}/stay-sharp/mp3/managing-work-anxiety.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/managing-work-anxiety.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/managing-work-anxiety.pdf`,
+  },
+  "ssos-power-up-to-do-list": {
+    title: "Power Up Your To-Do List",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Stop feeling overwhelmed. A smarter approach to getting things done.",
+    duration: "10 mins",
+    audio_url: `${R2}/stay-sharp/mp3/power-up-your-to-do-list.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/power-up-your-to-do-list.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/power-up-your-to-do-list.pdf`,
+  },
+  "ssos-sleep-productivity": {
+    title: "Sleep Your Productivity Superpower",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Why sleep is the most underrated performance tool — and how to use it.",
+    duration: "10 mins",
+    audio_url: `${R2}/stay-sharp/mp3/sleep-your-productivity-superpower.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/sleep-your-productivity-superpower.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/sleep-your-productivity-superpower.pdf`,
+  },
+  "ssos-art-of-resilience": {
+    title: "The Art of Resilience",
+    bundle: "Stay Sharp on Shift",
+    description:
+      "Build the mental toughness to bounce back from whatever hospitality throws at you.",
+    duration: "9 mins",
+    audio_url: `${R2}/stay-sharp/mp3/the-art-of-resilience.mp3`,
+    transcript_url: `${R2}/stay-sharp/transcripts/the-art-of-resilience.pdf`,
+    infographic_url: `${R2}/stay-sharp/infographics/the-art-of-resilience.pdf`,
+  },
+
+  // ── Step Up: Leadership ───────────────────────────────────────────
+  "su-communication-collaboration": {
+    title: "Communication and Collaboration",
+    bundle: "Step Up: Leadership",
+    description:
+      "Navigate the different relationships at work and communicate with confidence.",
+    duration: "12 mins",
+    audio_url: `${R2}/step-up/mp3/communication-and-collaboration.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/communication-and-collaboration.pdf`,
+    infographic_url: `${R2}/step-up/infographics/communication-and-collaboration.pdf`,
+  },
+  "su-courageous-leadership": {
+    title: "Courageous Leadership",
+    bundle: "Step Up: Leadership",
+    description: "Lead with conviction, even when it's uncomfortable.",
+    duration: "10 mins",
+    audio_url: `${R2}/step-up/mp3/courageous-leadership.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/courageous-leadership.pdf`,
+    infographic_url: `${R2}/step-up/infographics/courageous-leadership.pdf`,
+  },
+  "su-delegation-done-right": {
+    title: "Delegation Done Right",
+    bundle: "Step Up: Leadership",
+    description: "A practical guide to delegating effectively as a new leader.",
+    duration: "8 mins",
+    audio_url: `${R2}/step-up/mp3/delegation-done-right.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/delegation-done-right.pdf`,
+    infographic_url: `${R2}/step-up/infographics/delegation-done-right.pdf`,
+  },
+  "su-influence-and-impact": {
+    title: "Influence and Impact",
+    bundle: "Step Up: Leadership",
+    description:
+      "Learn how to affect those around you in a positive, lasting way.",
+    duration: "10 mins",
+    audio_url: `${R2}/step-up/mp3/influence-and-impact.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/influence-and-impact.pdf`,
+    infographic_url: `${R2}/step-up/infographics/influence-and-impact.pdf`,
+  },
+  "su-leading-with-empathy": {
+    title: "Leading With Empathy",
+    bundle: "Step Up: Leadership",
+    description:
+      "The most powerful leadership tool is understanding the people around you.",
+    duration: "11 mins",
+    audio_url: `${R2}/step-up/mp3/leading-with-empathy.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/leading-with-empathy.pdf`,
+    infographic_url: `${R2}/step-up/infographics/leading-with-empathy.pdf`,
+  },
+  "su-managing-conflict": {
+    title: "Managing Conflict in Your Team",
+    bundle: "Step Up: Leadership",
+    description:
+      "Turn tension into progress with a clear, calm approach to conflict.",
+    duration: "9 mins",
+    audio_url: `${R2}/step-up/mp3/managing-conflict-in-your-team.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/managing-conflict-in-your-team.pdf`,
+    infographic_url: `${R2}/step-up/infographics/managing-conflict-in-your-team.pdf`,
+  },
+  "su-motivating-your-team": {
+    title: "Motivating Your Team",
+    bundle: "Step Up: Leadership",
+    description: "Understand what drives people and how to keep them engaged.",
+    duration: "11 mins",
+    audio_url: `${R2}/step-up/mp3/motivating-your-team.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/motivating-your-team.pdf`,
+    infographic_url: `${R2}/step-up/infographics/motivating-your-team.pdf`,
+  },
+  "su-performance-management": {
+    title: "Performance Management",
+    bundle: "Step Up: Leadership",
+    description: "Have the conversations that help your team grow.",
+    duration: "11 mins",
+    audio_url: `${R2}/step-up/mp3/performance-management.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/performance-management.pdf`,
+    infographic_url: `${R2}/step-up/infographics/performance-management.pdf`,
+  },
+  "su-problem-solving": {
+    title: "Problem Solving: The Basics",
+    bundle: "Step Up: Leadership",
+    description: "A practical framework for solving problems under pressure.",
+    duration: "12 mins",
+    audio_url: `${R2}/step-up/mp3/problem-solving-the-basics.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/problem-solving-the-basics.pdf`,
+    infographic_url: `${R2}/step-up/infographics/problem-solving-the-basics.pdf`,
+  },
+  "su-speaking-with-authority": {
+    title: "Speaking with Authority",
+    bundle: "Step Up: Leadership",
+    description: "Say what you mean, mean what you say, and be heard.",
+    duration: "11 mins",
+    audio_url: `${R2}/step-up/mp3/speaking-with-authority.mp3`,
+    transcript_url: `${R2}/step-up/transcripts/speaking-with-authority.pdf`,
+    infographic_url: `${R2}/step-up/infographics/speaking-with-authority.pdf`,
   },
 };
 

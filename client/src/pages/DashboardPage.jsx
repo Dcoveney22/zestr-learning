@@ -12,6 +12,8 @@ const sans = "'DM Sans', system-ui, sans-serif";
 const AY_LOGO =
   "https://cdn.prod.website-files.com/6203efcd8b7ad046a53f6d0c/621e1dec28ca81b27c59877f_AY%20Site%20Logo%20Cropped.png";
 
+const R2 = "https://pub-512f258a3cf144b58fe2e982a3f16394.r2.dev";
+
 const BUNDLE_CONTENT = {
   "stay-sharp-on-shift-30": {
     title: "Stay Sharp on Shift",
@@ -21,11 +23,76 @@ const BUNDLE_CONTENT = {
     color: "#2D6A4F",
     episodes: [
       {
-        slug: "ssos-01",
-        title: "Episode 1",
-        description: "Coming soon",
-        duration: "~8 mins",
-        audio_url: null,
+        slug: "ssos-avoiding-burnout",
+        title: "Avoiding Burnout",
+        description:
+          "Understand burnout, why it happens, and practical steps to stop it in its tracks.",
+        duration: "8 mins",
+        audio_url: `${R2}/stay-sharp/mp3/avoiding-burnout.mp3`,
+      },
+      {
+        slug: "ssos-confidence-at-work",
+        title: "Confidence at Work",
+        description:
+          "Build the kind of quiet confidence that shows up when it matters most.",
+        duration: "11 mins",
+        audio_url: `${R2}/stay-sharp/mp3/confidence-at-work.mp3`,
+      },
+      {
+        slug: "ssos-how-to-manage-your-time",
+        title: "How to Manage Your Time",
+        description:
+          "Practical techniques to take control of your time on and off shift.",
+        duration: "11 mins",
+        audio_url: `${R2}/stay-sharp/mp3/how-to-manage-your-time.mp3`,
+      },
+      {
+        slug: "ssos-difficult-customers",
+        title: "How to Deal With Difficult Customers",
+        description:
+          "Stay calm, stay professional, and turn difficult moments into positive ones.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/how-to-deal-with-difficult-customers.mp3`,
+      },
+      {
+        slug: "ssos-keeping-energy-high",
+        title: "Keeping Your Energy High",
+        description:
+          "Simple habits to maintain your energy through even the longest shifts.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/keeping-your-energy-high.mp3`,
+      },
+      {
+        slug: "ssos-managing-work-anxiety",
+        title: "Managing Work Anxiety",
+        description:
+          "Recognise the signs of work anxiety and learn what to do about it.",
+        duration: "9 mins",
+        audio_url: `${R2}/stay-sharp/mp3/managing-work-anxiety.mp3`,
+      },
+      {
+        slug: "ssos-power-up-to-do-list",
+        title: "Power Up Your To-Do List",
+        description:
+          "Stop feeling overwhelmed. A smarter approach to getting things done.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/power-up-your-to-do-list.mp3`,
+      },
+      {
+        slug: "ssos-sleep-productivity",
+        title: "Sleep Your Productivity Superpower",
+        description:
+          "Why sleep is the most underrated performance tool — and how to use it.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/sleep-your-productivity-superpower.mp3`,
+      },
+      {
+        slug: "ssos-art-of-resilience",
+        title: "The Art of Resilience",
+        description:
+          "Build the mental toughness to bounce back from whatever hospitality throws at you.",
+        duration: "9 mins",
+        audio_url: `${R2}/stay-sharp/mp3/the-art-of-resilience.mp3`,
       },
     ],
   },
@@ -37,43 +104,248 @@ const BUNDLE_CONTENT = {
     color: "#2D6A4F",
     episodes: [
       {
-        slug: "ssos-01",
-        title: "Episode 1",
-        description: "Coming soon",
-        duration: "~8 mins",
-        audio_url: null,
+        slug: "ssos-avoiding-burnout",
+        title: "Avoiding Burnout",
+        description:
+          "Understand burnout, why it happens, and practical steps to stop it in its tracks.",
+        duration: "8 mins",
+        audio_url: `${R2}/stay-sharp/mp3/avoiding-burnout.mp3`,
+      },
+      {
+        slug: "ssos-confidence-at-work",
+        title: "Confidence at Work",
+        description:
+          "Build the kind of quiet confidence that shows up when it matters most.",
+        duration: "11 mins",
+        audio_url: `${R2}/stay-sharp/mp3/confidence-at-work.mp3`,
+      },
+      {
+        slug: "ssos-how-to-manage-your-time",
+        title: "How to Manage Your Time",
+        description:
+          "Practical techniques to take control of your time on and off shift.",
+        duration: "11 mins",
+        audio_url: `${R2}/stay-sharp/mp3/how-to-manage-your-time.mp3`,
+      },
+      {
+        slug: "ssos-difficult-customers",
+        title: "How to Deal With Difficult Customers",
+        description:
+          "Stay calm, stay professional, and turn difficult moments into positive ones.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/how-to-deal-with-difficult-customers.mp3`,
+      },
+      {
+        slug: "ssos-keeping-energy-high",
+        title: "Keeping Your Energy High",
+        description:
+          "Simple habits to maintain your energy through even the longest shifts.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/keeping-your-energy-high.mp3`,
+      },
+      {
+        slug: "ssos-managing-work-anxiety",
+        title: "Managing Work Anxiety",
+        description:
+          "Recognise the signs of work anxiety and learn what to do about it.",
+        duration: "9 mins",
+        audio_url: `${R2}/stay-sharp/mp3/managing-work-anxiety.mp3`,
+      },
+      {
+        slug: "ssos-power-up-to-do-list",
+        title: "Power Up Your To-Do List",
+        description:
+          "Stop feeling overwhelmed. A smarter approach to getting things done.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/power-up-your-to-do-list.mp3`,
+      },
+      {
+        slug: "ssos-sleep-productivity",
+        title: "Sleep Your Productivity Superpower",
+        description:
+          "Why sleep is the most underrated performance tool — and how to use it.",
+        duration: "10 mins",
+        audio_url: `${R2}/stay-sharp/mp3/sleep-your-productivity-superpower.mp3`,
+      },
+      {
+        slug: "ssos-art-of-resilience",
+        title: "The Art of Resilience",
+        description:
+          "Build the mental toughness to bounce back from whatever hospitality throws at you.",
+        duration: "9 mins",
+        audio_url: `${R2}/stay-sharp/mp3/the-art-of-resilience.mp3`,
       },
     ],
   },
   "leadership-sprint-30": {
-    title: "Leadership Sprint",
+    title: "Step Up: Leadership",
     subtitle: "CPD-accredited audio lessons, built around shift work",
     description:
       "Leadership is not just for managers. This bundle gives you the tools to lead from wherever you are — handling pressure, communicating with confidence, motivating a team, and thinking strategically even on a busy shift. CPD-accredited and built for hospitality.",
     color: "#1B4965",
     episodes: [
       {
-        slug: "ls-01",
-        title: "Episode 1",
-        description: "Coming soon",
-        duration: "~8 mins",
-        audio_url: null,
+        slug: "su-communication-collaboration",
+        title: "Communication and Collaboration",
+        description:
+          "Navigate the different relationships at work and communicate with confidence.",
+        duration: "12 mins",
+        audio_url: `${R2}/step-up/mp3/communication-and-collaboration.mp3`,
+      },
+      {
+        slug: "su-courageous-leadership",
+        title: "Courageous Leadership",
+        description: "Lead with conviction, even when it's uncomfortable.",
+        duration: "10 mins",
+        audio_url: `${R2}/step-up/mp3/courageous-leadership.mp3`,
+      },
+      {
+        slug: "su-delegation-done-right",
+        title: "Delegation Done Right",
+        description:
+          "A practical guide to delegating effectively as a new leader.",
+        duration: "8 mins",
+        audio_url: `${R2}/step-up/mp3/delegation-done-right.mp3`,
+      },
+      {
+        slug: "su-influence-and-impact",
+        title: "Influence and Impact",
+        description:
+          "Learn how to affect those around you in a positive, lasting way.",
+        duration: "10 mins",
+        audio_url: `${R2}/step-up/mp3/influence-and-impact.mp3`,
+      },
+      {
+        slug: "su-leading-with-empathy",
+        title: "Leading With Empathy",
+        description:
+          "The most powerful leadership tool is understanding the people around you.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/leading-with-empathy.mp3`,
+      },
+      {
+        slug: "su-managing-conflict",
+        title: "Managing Conflict in Your Team",
+        description:
+          "Turn tension into progress with a clear, calm approach to conflict.",
+        duration: "9 mins",
+        audio_url: `${R2}/step-up/mp3/managing-conflict-in-your-team.mp3`,
+      },
+      {
+        slug: "su-motivating-your-team",
+        title: "Motivating Your Team",
+        description:
+          "Understand what drives people and how to keep them engaged.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/motivating-your-team.mp3`,
+      },
+      {
+        slug: "su-performance-management",
+        title: "Performance Management",
+        description: "Have the conversations that help your team grow.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/performance-management.mp3`,
+      },
+      {
+        slug: "su-problem-solving",
+        title: "Problem Solving: The Basics",
+        description:
+          "A practical framework for solving problems under pressure.",
+        duration: "12 mins",
+        audio_url: `${R2}/step-up/mp3/problem-solving-the-basics.mp3`,
+      },
+      {
+        slug: "su-speaking-with-authority",
+        title: "Speaking with Authority",
+        description: "Say what you mean, mean what you say, and be heard.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/speaking-with-authority.mp3`,
       },
     ],
   },
   "leadership-sprint-90": {
-    title: "Leadership Sprint",
+    title: "Step Up: Leadership",
     subtitle: "CPD-accredited audio lessons, built around shift work",
     description:
       "Leadership is not just for managers. This bundle gives you the tools to lead from wherever you are — handling pressure, communicating with confidence, motivating a team, and thinking strategically even on a busy shift. CPD-accredited and built for hospitality.",
     color: "#1B4965",
     episodes: [
       {
-        slug: "ls-01",
-        title: "Episode 1",
-        description: "Coming soon",
-        duration: "~8 mins",
-        audio_url: null,
+        slug: "su-communication-collaboration",
+        title: "Communication and Collaboration",
+        description:
+          "Navigate the different relationships at work and communicate with confidence.",
+        duration: "12 mins",
+        audio_url: `${R2}/step-up/mp3/communication-and-collaboration.mp3`,
+      },
+      {
+        slug: "su-courageous-leadership",
+        title: "Courageous Leadership",
+        description: "Lead with conviction, even when it's uncomfortable.",
+        duration: "10 mins",
+        audio_url: `${R2}/step-up/mp3/courageous-leadership.mp3`,
+      },
+      {
+        slug: "su-delegation-done-right",
+        title: "Delegation Done Right",
+        description:
+          "A practical guide to delegating effectively as a new leader.",
+        duration: "8 mins",
+        audio_url: `${R2}/step-up/mp3/delegation-done-right.mp3`,
+      },
+      {
+        slug: "su-influence-and-impact",
+        title: "Influence and Impact",
+        description:
+          "Learn how to affect those around you in a positive, lasting way.",
+        duration: "10 mins",
+        audio_url: `${R2}/step-up/mp3/influence-and-impact.mp3`,
+      },
+      {
+        slug: "su-leading-with-empathy",
+        title: "Leading With Empathy",
+        description:
+          "The most powerful leadership tool is understanding the people around you.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/leading-with-empathy.mp3`,
+      },
+      {
+        slug: "su-managing-conflict",
+        title: "Managing Conflict in Your Team",
+        description:
+          "Turn tension into progress with a clear, calm approach to conflict.",
+        duration: "9 mins",
+        audio_url: `${R2}/step-up/mp3/managing-conflict-in-your-team.mp3`,
+      },
+      {
+        slug: "su-motivating-your-team",
+        title: "Motivating Your Team",
+        description:
+          "Understand what drives people and how to keep them engaged.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/motivating-your-team.mp3`,
+      },
+      {
+        slug: "su-performance-management",
+        title: "Performance Management",
+        description: "Have the conversations that help your team grow.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/performance-management.mp3`,
+      },
+      {
+        slug: "su-problem-solving",
+        title: "Problem Solving: The Basics",
+        description:
+          "A practical framework for solving problems under pressure.",
+        duration: "12 mins",
+        audio_url: `${R2}/step-up/mp3/problem-solving-the-basics.mp3`,
+      },
+      {
+        slug: "su-speaking-with-authority",
+        title: "Speaking with Authority",
+        description: "Say what you mean, mean what you say, and be heard.",
+        duration: "11 mins",
+        audio_url: `${R2}/step-up/mp3/speaking-with-authority.mp3`,
       },
     ],
   },
