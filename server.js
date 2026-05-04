@@ -303,7 +303,7 @@ app.post("/api/progress", authMiddleware, async (req, res) => {
     await sql`
       INSERT INTO learning_progress (user_id, bundle_id, episode_slug)
       VALUES (${req.user.userId}, ${bundleId}, ${episodeSlug})
-      ON CONFLICT (user_id, episode_slug) DO NOTHING
+      ON CONFLICT (bundle_id, episode_slug) DO NOTHING
     `;
 
     res.json({ success: true });
